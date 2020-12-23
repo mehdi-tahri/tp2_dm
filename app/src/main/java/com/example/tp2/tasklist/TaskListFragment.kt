@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,7 +23,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
 import coil.load
+import com.example.tp2.MainActivity
+import com.example.tp2.SHARED_PREF_TOKEN_KEY
+import com.example.tp2.authentification.AuthenticationActivity
 import com.example.tp2.userinfo.UserInfoActivity
 import com.example.tp2.userinfo.UserInfoViewModel
 
@@ -72,11 +77,18 @@ class TaskListFragment: Fragment()  {
 
         //Quand il y a du changement sur le contenue de l'utilisateur on met a jour ces info
         viewModelUser.user.observe(viewLifecycleOwner, Observer {
-            view?.findViewById<TextView>(R.id.textView_fragment)?.text = it.firstName + it.lastName
+            view?.findViewById<TextView>(R.id.textView_fragment)?.text = it.firstName +" "+ it.lastName
             view?.findViewById<ImageView>(R.id.imageView)?.load(it.avatar)
             adapter.notifyDataSetChanged();
         })
 
+        // btn de déconnexion
+        view.findViewById<FloatingActionButton>(R.id.action_button_exitapp).setOnClickListener {
+            PreferenceManager.getDefaultSharedPreferences(context).edit {
+                putString(SHARED_PREF_TOKEN_KEY, "")
+                startActivity(Intent(activity, AuthenticationActivity::class.java))
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

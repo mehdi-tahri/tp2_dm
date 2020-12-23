@@ -39,8 +39,10 @@ class SignupFragment: Fragment()  {
 
             // TODO : rendre le btn non clickable si les info ne sont pas remplie (pour enlever ce test)
             if(firstname.isBlank() || lastname.isBlank() || email.isBlank() || password.isBlank() || password_confirm.isBlank()){
-                Toast.makeText(context, "Veuillez entrer toute les informations demandez", Toast.LENGTH_LONG).show()
-            }else{
+                Toast.makeText(context, "Veuillez entrer toutes les informations demandées", Toast.LENGTH_LONG).show()
+            }else if(password != password_confirm) {
+                Toast.makeText(context, "Votre password et password confirm doivent être identique", Toast.LENGTH_LONG).show()
+            } else{
                 val loginForm =SignUpForm(firstname,lastname,email,password,password_confirm)
                 lifecycleScope.launch {
                     val signupResponse =  Api.INSTANCE.userService.signUp(loginForm)
@@ -51,7 +53,7 @@ class SignupFragment: Fragment()  {
                         }
                         startActivity(Intent(activity, MainActivity::class.java))
                     }else{
-                        Toast.makeText(context, "erreur lors de l'authentification, veuillez vérifier vos informations", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "erreur lors de l'inscription, veuillez vérifier vos informations", Toast.LENGTH_LONG).show()
                     }
                 }
             }
