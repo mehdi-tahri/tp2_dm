@@ -30,6 +30,7 @@ import com.example.tp2.SHARED_PREF_TOKEN_KEY
 import com.example.tp2.authentification.AuthenticationActivity
 import com.example.tp2.userinfo.UserInfoActivity
 import com.example.tp2.userinfo.UserInfoViewModel
+import com.mikhaellopez.circularimageview.CircularImageView
 
 class TaskListFragment: Fragment()  {
 
@@ -78,7 +79,7 @@ class TaskListFragment: Fragment()  {
         //Quand il y a du changement sur le contenue de l'utilisateur on met a jour ces info
         viewModelUser.user.observe(viewLifecycleOwner, Observer {
             view?.findViewById<TextView>(R.id.textView_fragment)?.text = it.firstName +" "+ it.lastName
-            view?.findViewById<ImageView>(R.id.imageView)?.load(it.avatar)
+            view?.findViewById<CircularImageView>(R.id.imageView)?.load(it.avatar)
             adapter.notifyDataSetChanged();
         })
 
@@ -116,7 +117,7 @@ class TaskListFragment: Fragment()  {
 
         //Image de base
         //imageView?.load("https://image.freepik.com/vecteurs-libre/urss-marteau-faucille_125371-91.jpg")
-        view?.findViewById<ImageView>(R.id.imageView)?.setOnClickListener {
+        view?.findViewById<CircularImageView>(R.id.imageView)?.setOnClickListener {
             val intent = Intent(activity, UserInfoActivity::class.java)
             startActivity(intent)
         }
