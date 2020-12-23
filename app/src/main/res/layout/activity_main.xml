@@ -10,18 +10,12 @@
     <fragment
         android:id="@+id/fragment2"
         android:name="com.example.tp2.tasklist.TaskListFragment"
-        android:layout_width="161dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="308dp"
-        android:layout_marginEnd="167dp"
-        android:layout_marginBottom="404dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.202"
         tools:layout="@layout/fragment_task_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
