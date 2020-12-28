@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import coil.load
 import com.example.tp2.MainActivity
@@ -55,8 +56,8 @@ class TaskListFragment: Fragment()  {
         recyclerView.adapter = adapter
 
         view.findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener {
-            val intent = Intent(activity, TaskActivity::class.java)
-            startActivityForResult(intent, ADD_TASK_REQUEST_CODE)
+            findNavController().currentBackStackEntry ?.savedStateHandle?.set("code", ADD_TASK_REQUEST_CODE)
+            findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentTaskEdit)
         }
 
         //Pas besoin de start une activity on suprimme juste de la liste et on refresh en notifiant l'adapter (TaskListAdapter)
@@ -65,10 +66,14 @@ class TaskListFragment: Fragment()  {
             adapter.notifyDataSetChanged()
         }
 
+        //On envoie le code edit avec la task
         adapter.onEditClickListener = { task ->
-            val intent = Intent(activity, TaskActivity::class.java)
-            intent.putExtra(TaskActivity.TASK_KEY.toString(), task)
-            startActivityForResult(intent, TaskActivity.EDIT_TASK_REQUEST_CODE)
+            findNavController().currentBackStackEntry?.savedStateHandle?.set("code", TaskActivity.EDIT_TASK_REQUEST_CODE)
+            findNavController().currentBackStackEntry?.savedStateHandle?.set("task", task)
+            findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentTaskEdit)
+            //val intent = Intent(activity, TaskActivity::class.java)
+            //intent.putExtra(TaskActivity.TASK_KEY.toString(), task)
+            //startActivityForResult(intent, TaskActivity.EDIT_TASK_REQUEST_CODE)
         }
 
         viewModel.taskList.observe(viewLifecycleOwner, Observer {
@@ -87,11 +92,12 @@ class TaskListFragment: Fragment()  {
         view.findViewById<FloatingActionButton>(R.id.action_button_exitapp).setOnClickListener {
             PreferenceManager.getDefaultSharedPreferences(context).edit {
                 putString(SHARED_PREF_TOKEN_KEY, "")
-                startActivity(Intent(activity, AuthenticationActivity::class.java))
+                findNavController().navigate(R.id.action_fragmentTaskList_to_authenticationFragment)
+                //startActivity(Intent(activity, AuthenticationActivity::class.java))
             }
         }
     }
-
+/*
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if( resultCode == Activity.RESULT_OK){
@@ -102,29 +108,23 @@ class TaskListFragment: Fragment()  {
                 viewModel.editTask(task)
             }
         }
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            /*val userInfo = Api.userService.getInfo().body()!!
-            view?.findViewById<TextView>(R.id.textView_fragment)?.text   = "${userInfo.firstName} ${userInfo.lastName}"
-            view?.findViewById<ImageView>(R.id.imageView)?.load(userInfo.avatar)
-             */
             viewModelUser.loadInfo()
             viewModel.loadTasks()
         }
 
-        //Image de base
-        //imageView?.load("https://image.freepik.com/vecteurs-libre/urss-marteau-faucille_125371-91.jpg")
         view?.findViewById<CircularImageView>(R.id.imageView)?.setOnClickListener {
-            val intent = Intent(activity, UserInfoActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentUserInfo)
+            startActivity(Intent(activity, UserInfoActivity::class.java))
         }
 
         view?.findViewById<TextView>(R.id.textView_fragment)?.setOnClickListener {
-            val intent = Intent(activity, UserInfoActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentUserInfo)
+            startActivity(Intent(activity, UserInfoActivity::class.java))
         }
 
     }

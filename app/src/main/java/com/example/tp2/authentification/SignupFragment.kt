@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.tp2.MainActivity
 import com.example.tp2.R
@@ -51,7 +52,8 @@ class SignupFragment: Fragment()  {
                         PreferenceManager.getDefaultSharedPreferences(context).edit {
                             putString(SHARED_PREF_TOKEN_KEY, token)
                         }
-                        startActivity(Intent(activity, MainActivity::class.java))
+                        findNavController().navigate(R.id.action_signupFragment_to_fragmentTaskList)
+                        //startActivity(Intent(activity, MainActivity::class.java))
                     }else{
                         Toast.makeText(context, "erreur lors de l'inscription, veuillez vérifier vos informations", Toast.LENGTH_LONG).show()
                     }

@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.tp2.MainActivity
 import com.example.tp2.R
@@ -48,12 +50,10 @@ class LoginFragment: Fragment() {
                         PreferenceManager.getDefaultSharedPreferences(context).edit {
                             putString(SHARED_PREF_TOKEN_KEY, token)
                         }
-                        startActivity(Intent(activity, MainActivity::class.java))
+                        findNavController().navigate(R.id.action_loginFragment_to_fragmentTaskList)
+                        //startActivity(Intent(activity, MainActivity::class.java))
                     }else{
-                        val message = loginResponse.errorBody()?.string() ?: ""
-                        Log.e("SIGNUP ", loginResponse.errorBody().toString())
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                        //Toast.makeText(context, "erreur lors de l'authentification, veuillez vérifier vos informations", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "erreur lors de l'authentification, veuillez vérifier vos informations", Toast.LENGTH_LONG).show()
                     }
                 }
             }

@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.tp2.MainActivity
 import com.example.tp2.R
@@ -26,8 +28,7 @@ class AuthenticationFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!Api.INSTANCE.getToken().isNullOrEmpty()) {
-            Log.e("SIGNUP ", Api.INSTANCE.getToken().toString())
-            startActivity(Intent(activity, MainActivity::class.java))
+            findNavController().navigate(R.id.action_authenticationFragment_to_fragmentTaskList)
         }
         view.findViewById<Button>(R.id.button_login).setOnClickListener {
             findNavController().navigate(R.id.action_authenticationFragment_to_loginFragment)
