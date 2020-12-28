@@ -1,44 +1,37 @@
 package com.example.tp2.tasklist
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp2.R
-import com.example.tp2.Task
-import com.example.tp2.network.Api
-import com.example.tp2.task.TaskActivity
-import com.example.tp2.task.TaskActivity.Companion.ADD_TASK_REQUEST_CODE
+import com.example.tp2.task.TaskFragment
+import com.example.tp2.task.TaskFragment.Companion.ADD_TASK_REQUEST_CODE
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import coil.load
-import com.example.tp2.MainActivity
 import com.example.tp2.SHARED_PREF_TOKEN_KEY
-import com.example.tp2.authentification.AuthenticationActivity
 import com.example.tp2.userinfo.UserInfoActivity
 import com.example.tp2.userinfo.UserInfoViewModel
 import com.mikhaellopez.circularimageview.CircularImageView
 
 class TaskListFragment: Fragment()  {
 
-    private val viewModel: TaskListViewModel by viewModels()
+    private val viewModel: TaskListViewModel by activityViewModels()
     private val viewModelUser: UserInfoViewModel by viewModels()
     private val adapter = TaskListAdapter()
-    //private val tasksRepository = TasksRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,12 +61,9 @@ class TaskListFragment: Fragment()  {
 
         //On envoie le code edit avec la task
         adapter.onEditClickListener = { task ->
-            findNavController().currentBackStackEntry?.savedStateHandle?.set("code", TaskActivity.EDIT_TASK_REQUEST_CODE)
+            findNavController().currentBackStackEntry?.savedStateHandle?.set("code", TaskFragment.EDIT_TASK_REQUEST_CODE)
             findNavController().currentBackStackEntry?.savedStateHandle?.set("task", task)
             findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentTaskEdit)
-            //val intent = Intent(activity, TaskActivity::class.java)
-            //intent.putExtra(TaskActivity.TASK_KEY.toString(), task)
-            //startActivityForResult(intent, TaskActivity.EDIT_TASK_REQUEST_CODE)
         }
 
         viewModel.taskList.observe(viewLifecycleOwner, Observer {
@@ -93,22 +83,9 @@ class TaskListFragment: Fragment()  {
             PreferenceManager.getDefaultSharedPreferences(context).edit {
                 putString(SHARED_PREF_TOKEN_KEY, "")
                 findNavController().navigate(R.id.action_fragmentTaskList_to_authenticationFragment)
-                //startActivity(Intent(activity, AuthenticationActivity::class.java))
             }
         }
     }
-/*
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if( resultCode == Activity.RESULT_OK){
-            val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY.toString()) as Task
-            if (requestCode == TaskActivity.ADD_TASK_REQUEST_CODE ) {
-                viewModel.addTask(task)
-            } else if (requestCode == TaskActivity.EDIT_TASK_REQUEST_CODE ) {
-                viewModel.editTask(task)
-            }
-        }
-    }*/
 
     override fun onResume() {
         super.onResume()
@@ -118,12 +95,12 @@ class TaskListFragment: Fragment()  {
         }
 
         view?.findViewById<CircularImageView>(R.id.imageView)?.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentUserInfo)
+            //findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentUserInfo)
             startActivity(Intent(activity, UserInfoActivity::class.java))
         }
 
         view?.findViewById<TextView>(R.id.textView_fragment)?.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentUserInfo)
+           // findNavController().navigate(R.id.action_fragmentTaskList_to_fragmentUserInfo)
             startActivity(Intent(activity, UserInfoActivity::class.java))
         }
 

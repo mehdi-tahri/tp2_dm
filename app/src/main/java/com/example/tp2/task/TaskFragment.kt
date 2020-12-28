@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tp2.R
@@ -16,9 +17,9 @@ import com.example.tp2.Task
 import com.example.tp2.tasklist.TaskListViewModel
 import java.util.*
 
-class TaskActivity  : Fragment(){
+class TaskFragment  : Fragment(){
 
-    private val viewModelTaskList: TaskListViewModel by viewModels()
+    private val viewModelTaskList: TaskListViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -32,35 +33,21 @@ class TaskActivity  : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         view.findViewById<Button>(R.id.button_validate).setOnClickListener {
-            //val task = intent.getSerializableExtra(TASK_KEY.toString()) as? Task
             val res = findNavController().previousBackStackEntry?.savedStateHandle?.get<Int>("code")
+            val task = findNavController().previousBackStackEntry?.savedStateHandle?.get<Task>("task")
+
+            val UUID = task?.id ?: UUID.randomUUID().toString()
+            val newTitle = view.findViewById<EditText>(R.id.edit_title).text.toString()
+            val newDescription = view.findViewById<EditText>(R.id.edit_desc).text.toString()
+            val newTask = Task(id = UUID, title = newTitle, description = newDescription)
 
             if(res == EDIT_TASK_REQUEST_CODE){
-                val task = findNavController().previousBackStackEntry?.savedStateHandle?.get<Task>("task")
-                val UUID = task?.id ?: UUID.randomUUID().toString()
-                val newTitle = view.findViewById<EditText>(R.id.edit_title).text.toString()
-                val newDescription = view.findViewById<EditText>(R.id.edit_desc).text.toString()
-                val newTask = Task(id = UUID, title = newTitle, description = newDescription)
-                Log.e(" TEST", task.toString())
-                Log.e(" TEST2", newTask.toString())
                 viewModelTaskList.editTask(newTask)
-
             }else if(res == ADD_TASK_REQUEST_CODE){
-                val UUID = UUID.randomUUID().toString()
-                val newTitle = view.findViewById<EditText>(R.id.edit_title).text.toString()
-                val newDescription = view.findViewById<EditText>(R.id.edit_desc).text.toString()
-                val newTask = Task(id = UUID, title = newTitle, description = newDescription)
-
                 viewModelTaskList.addTask(newTask)
             }
+
             findNavController().navigate(R.id.action_fragmentTaskEdit_to_fragmentTaskList)
-
-
-            /*
-            intent?.putExtra(TASK_KEY.toString(),newTask)
-            setResult(RESULT_OK, intent)
-            finish()
-             */
         }
     }
 

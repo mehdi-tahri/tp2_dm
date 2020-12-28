@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/fragmentTaskEdit"
-        android:name="com.example.tp2.task.TaskActivity"
+        android:name="com.example.tp2.task.TaskFragment"
         android:label="fragment_task_edit"
         tools:layout="@layout/task_edit" >
         <action

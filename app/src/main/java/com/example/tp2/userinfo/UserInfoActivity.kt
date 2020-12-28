@@ -14,16 +14,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.example.tp2.BuildConfig
 import com.example.tp2.R
-import com.example.tp2.Task
 import com.example.tp2.network.Api
-import com.example.tp2.network.UserInfo
 import com.example.tp2.network.UserInfoRepository
-import com.example.tp2.task.TaskActivity
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
