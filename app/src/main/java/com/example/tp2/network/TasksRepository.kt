@@ -1,8 +1,6 @@
 package com.example.tp2.network
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.tp2.Task
+import com.example.tp2.task.Task
 
 class TasksRepository {
     private val tasksWebService = Api.INSTANCE.tasksWebService

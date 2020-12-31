@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Setting">
+
+        <CheckBoxPreference
+            android:key="checkBoxPref"
+            android:title="check it out"
+            android:summary="click this little box"/>
+        <EditTextPreference
+            android:defaultValue="@string/app_name"
+            android:key="user_app_name"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Edit application name" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

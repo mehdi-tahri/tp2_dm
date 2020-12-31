@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tp2.Task
+import com.example.tp2.task.Task
 import com.example.tp2.network.TasksRepository
 import kotlinx.coroutines.launch
 
@@ -20,7 +20,7 @@ class TaskListViewModel: ViewModel()  {
         }
     }
 
-    fun deleteTask(task:Task) {
+    fun deleteTask(task: Task) {
         viewModelScope.launch {
             if (repository.deleteTask(task)) {
                 val editableList = _taskList.value.orEmpty().toMutableList()
@@ -30,7 +30,7 @@ class TaskListViewModel: ViewModel()  {
         }
     }
 
-    fun addTask(task:Task) {
+    fun addTask(task: Task) {
         viewModelScope.launch {
             repository.createTask(task)?.let { task ->
                 val editableList = _taskList.value.orEmpty().toMutableList()
@@ -40,7 +40,7 @@ class TaskListViewModel: ViewModel()  {
         }
     }
 
-    fun editTask(task:Task) {
+    fun editTask(task: Task) {
         viewModelScope.launch {
             repository.updateTask(task)?.let { task ->
                 val editableList = _taskList.value.orEmpty().toMutableList()

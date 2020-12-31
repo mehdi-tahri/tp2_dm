@@ -1,19 +1,15 @@
-package com.example.tp2.task
+    package com.example.tp2.task
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tp2.R
-import com.example.tp2.Task
 import com.example.tp2.tasklist.TaskListViewModel
 import java.util.*
 

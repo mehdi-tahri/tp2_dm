@@ -1,6 +1,6 @@
 package com.example.tp2.network
 
-import com.example.tp2.Task
+import com.example.tp2.task.Task
 import retrofit2.Response
 import retrofit2.http.*
 

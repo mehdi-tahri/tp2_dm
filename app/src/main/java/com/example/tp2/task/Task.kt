@@ -1,4 +1,4 @@
-package com.example.tp2
+package com.example.tp2.task
 
 import java.io.Serializable
 

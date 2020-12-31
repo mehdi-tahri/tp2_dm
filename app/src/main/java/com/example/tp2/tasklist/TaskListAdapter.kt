@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp2.R
-import com.example.tp2.Task
+import com.example.tp2.task.Task
 
 class TaskListAdapter() : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TaskDiffCallBack) {
      public var taskList: List<Task> = emptyList()

@@ -1,7 +1,5 @@
 package com.example.tp2.network
 
-import com.example.tp2.Task
-
 class UserInfoRepository {
     private val userWebService = Api.INSTANCE.userService
 

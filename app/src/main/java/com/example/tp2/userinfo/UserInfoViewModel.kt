@@ -1,10 +1,8 @@
 package com.example.tp2.userinfo
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tp2.Task
 import com.example.tp2.network.UserInfo
 import com.example.tp2.network.UserInfoRepository
 import kotlinx.coroutines.launch
