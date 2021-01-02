@@ -1,6 +1,8 @@
 package com.example.tp2.authentification
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -17,35 +19,34 @@ import kotlinx.coroutines.launch
 
 class AuthenticationActivity: AppCompatActivity() {
 
-    lateinit var userManager : UserPreferenceRepository
-    var app_name ="Default Value test"
+    private val userManager = UserPreferenceRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authentification)
 
-        userManager = UserPreferenceRepository(this)
-
-        observeData()
-
-        /*val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        val appName = pref.getString("edit_text_preference_1","")
-        this.setTitle(appName)
-
-         */
-
-    }
-
-    private fun observeData(){
-        userManager.userAppNameFlow.asLiveData().observe(this,{
-            app_name = it
-            Log.e(" TEST", it)
-            this.setTitle(app_name)
-        })
-
-        GlobalScope.launch{
-            userManager.updateShowCompleted(app_name)
+        userManager.colorTextFlow.asLiveData().observe(this) {
+            if(it != null && it != ""){
+                when(it){
+                    "Default" -> getTheme().applyStyle(R.style.DefaulTheme,true)
+                    "Black" -> getTheme().applyStyle(R.style.BlackTheme,true)
+                    "Purple" -> getTheme().applyStyle(R.style.PurpleTheme,true)
+                    "Cyan" -> getTheme().applyStyle(R.style.CyanTheme,true)
+                }
+            }
         }
+
+        userManager.userAppNameFlow.asLiveData().observe(this) {
+            title = it
+        }
+
+        userManager.colorAppBarFlow.asLiveData().observe(this) {
+            if(it != null && it != ""){
+                //La ListPreference ne fonctionne pas quand on lui donne des couleurs avec # donc on le rajoute ici
+                var color = "#$it"
+                supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+            }
+        }
+        setContentView(R.layout.activity_authentification)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

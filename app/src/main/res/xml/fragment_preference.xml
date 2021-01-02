@@ -13,6 +13,20 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Edit application name" />
+        <ListPreference
+            android:key="change_color_appbar"
+            android:title="Changer la couleur de l'app bar "
+            android:entries="@array/colors_name"
+            android:entryValues="@array/colors_choice"
+            android:defaultValue="@color/purple_500"
+            />
+        <ListPreference
+            android:key="change_color_text"
+            android:title="Changer la couleur de la police "
+            android:entries="@array/colors_name"
+            android:entryValues="@array/colors_name"
+            android:defaultValue="@color/purple_500"
+            />
 
     </PreferenceCategory>
 </PreferenceScreen>
